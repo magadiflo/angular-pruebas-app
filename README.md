@@ -15,4 +15,8 @@ ng test --no-watch --code-coverage
 # Importante
 Tener Chrome para compilar las estadísticas, sino no se podrá
 
+## ¿Cómo ignorar una prueba?
+Colocar una x delante del método describe(....): xdescribe(...), de esa forma ignorará todas las pruebas
+que estén dentro
+
 
