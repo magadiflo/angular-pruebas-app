@@ -20,3 +20,13 @@ Colocar una x delante del método describe(....): xdescribe(...), de esa forma i
 que estén dentro
 
 
+## Partes de una prueba
+Agrupara las pruebas
+```
+describe();
+```
+
+Es una prueba
+```
+it();
+```
