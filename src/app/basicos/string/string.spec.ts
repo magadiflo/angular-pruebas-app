@@ -7,4 +7,10 @@ describe('Pruebas de strings', () => {
         expect(typeof resp).toBe('string');
     });
 
+    it('Debe contener en la cadena del saludo el nombre enviado', () => {
+        const nombre: string = 'Martín';
+        const resp = mensaje(nombre);
+        expect(resp).toContain(nombre);
+    });
+
 });
