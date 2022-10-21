@@ -52,4 +52,22 @@ describe('MedicosComponent', () => {
         expect(componente.mensajeError).toBe(miError);
     });
 
+    it('Debe de llamar al servidor para borrar el médico', () => {
+        spyOn(window, 'confirm').and.returnValue(true); //* Cundo en el confirm hace click en aceptar
+        const espia = spyOn(servicio, 'borrarMedico').and.returnValue(EMPTY);
+
+        componente.borrarMedico('1');
+
+        expect(espia).toHaveBeenCalledOnceWith('1');
+    });
+
+    it('No Debe de llamar al servidor para borrar el médico', () => {
+        spyOn(window, 'confirm').and.returnValue(false);
+        const espia = spyOn(servicio, 'borrarMedico').and.returnValue(EMPTY);
+
+        componente.borrarMedico('1');
+
+        expect(espia).not.toHaveBeenCalledOnceWith('1');
+    });
+
 });
