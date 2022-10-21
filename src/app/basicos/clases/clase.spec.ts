@@ -31,4 +31,9 @@ describe('Pruebas de clase', () => {
         expect(hp).toBe(50);
     });
 
+    it('Debe retornar 0 si recibe 100 o más de daño', () => {
+        const hp = jugador.recibeDanio(101);
+        expect(hp).toBe(0);
+    });
+
 });
