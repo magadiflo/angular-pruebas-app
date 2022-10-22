@@ -13,4 +13,8 @@ export class MedicoComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  saludarMedico(nombre: string): string {
+    return `Hola ${nombre}`;
+  }
+
 }
