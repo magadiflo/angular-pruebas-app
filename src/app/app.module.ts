@@ -3,12 +3,14 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { MedicosComponent } from './intermedio/espias/medicos.component';
+import { MedicoComponent } from './intermedio-2/medico/medico.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     MedicosComponent,
+    MedicoComponent,
   ],
   imports: [
     BrowserModule
