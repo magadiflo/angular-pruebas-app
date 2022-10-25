@@ -3,7 +3,7 @@ import { AppComponent } from './app.component';
 
 import { By } from "@angular/platform-browser";
 import { RouterTestingModule } from "@angular/router/testing";
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet, RouterLinkWithHref } from '@angular/router';
 
 
 describe('AppComponent', () => {
@@ -28,6 +28,13 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const debugElement = fixture.debugElement.query(By.directive(RouterOutlet));
     expect(debugElement).not.toBeNull();    
+  });
+
+  it('Debe tener un link a la página de médicos', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const elementos = fixture.debugElement.queryAll(By.directive(RouterLinkWithHref));
+    const resp = elementos.filter(elemento => elemento.attributes['routerLink'] === '/medicos');
+    expect(resp.length).toBeGreaterThanOrEqual(1);
   });
 
 
