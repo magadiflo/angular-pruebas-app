@@ -12,6 +12,7 @@ import { IncrementadorComponent } from './intermedio-2/incrementador/incrementad
 //* No importa si no funcionan las rutas, únicamente estamos probando la integración
 import { RUTAS } from './avanzado/rutas/app.routes';
 import { NavbarComponent } from './avanzado/navbar/navbar.component';
+import { RouterMedicoComponent } from './avanzado/router-medico/router-medico.component';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { NavbarComponent } from './avanzado/navbar/navbar.component';
     HospitalComponent,
     IncrementadorComponent,
     NavbarComponent,
+    RouterMedicoComponent,
   ],
   imports: [
     BrowserModule,
