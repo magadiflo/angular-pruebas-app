@@ -9,6 +9,9 @@ describe('Jugador 2 Emit', () => {
     it('Debe emitir un evento cuando recibe daño', () => {
         let nuevoHp = 0;
 
+        //* Importante, aquí el subscribe(...) aunque es asíncrona, nuestra prueba
+        //* espera que eso se resuelva para continuar. Más adelante, en otros ejercicios
+        //* se verán códigos realmente asíncronos
         jugador.hpCambia.subscribe(hp => nuevoHp = hp);
 
         jugador.recibeDanio(1000);

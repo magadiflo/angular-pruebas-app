@@ -26,6 +26,8 @@ describe('MedicosComponent', () => {
 
     it('Debe de llamar al servidor para agregar un médico', () => {
         const espia = spyOn(servicio, 'agregarMedico').and.callFake(medico => {
+            //* Regresamos un observable vacío porque no nos interesa el resultado, 
+            //* solo queremos estar seguros que al agregar un médico se llame el método agregarMedico
             return EMPTY;
         });
 
