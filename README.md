@@ -8,6 +8,13 @@ ng test
 ```
 
 # Para ver estadísticas de las pruebas
+
+Genera el reporte de la covertura de pruebas y está pendiente para actualizarlo en tiempo real
+```
+ng test --code-coverage
+```
+
+Genera el reporte de la covertura de pruebas
 ```
 ng test --no-watch --code-coverage
 ```
