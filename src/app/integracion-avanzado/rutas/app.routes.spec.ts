@@ -1,4 +1,4 @@
-import { MedicosComponent } from '../../intermedio/espias/medicos.component';
+import { MedicosComponent } from '../../unitarias-intermedio/espias/medicos.component';
 import { RUTAS } from './app.routes';
 
 describe('Rutas principales', () => {
