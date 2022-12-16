@@ -29,8 +29,13 @@ describe('Médico Component [Prueba de integración]', () => {
         //* para probar este componente, además de las cosas que quizá requiera su html
         TestBed.configureTestingModule({
             declarations: [MedicoComponent],
-            imports: [HttpClientModule],
-            providers: [MedicoService]
+            imports: [HttpClientModule], //* Como en el MedicoService se usa el HttpClient, necesitamos importar su módulo 
+            
+            //* En el video agrega el MedicoService al providers porque no tiene
+            //* definido en el @Injectable de ese servicio el providedIn: 'root',
+            //* en nuestro caso sí lo tiene, así que esta configuración no iría
+            //*
+            //* providers: [MedicoService],
         });
 
         //* Ahora, necesitamos crear un componente ya compilado y procesado por el TestBed
