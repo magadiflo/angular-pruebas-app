@@ -21,10 +21,16 @@ describe('Incremendator Component', () => {
     });
 
     it('Debe mostrar la leyenda', () => {
+        //* Arrange
         component.leyenda = 'Progreso de carga';
+        const elem: HTMLElement = fixture.debugElement.query(By.css('h3')).nativeElement; //* css(..), si le mandamos directo el elemento lo tomará como un elemento html. Si le anteponemos un ., se llamará como clase
+        //* Podríamos haber usado de esata forma tabién, tal como muestra la documentación de Angular
+        //*const elem = (fixture.nativeElement as HTMLElement).querySelector('h3');
+
+        //* Act
         fixture.detectChanges(); //* disparar la detección de cambios
 
-        const elem: HTMLElement = fixture.debugElement.query(By.css('h3')).nativeElement; //* css(..), si le mandamos directo el elemento lo tomará como un elemento html. Si le anteponemos un ., se llamará como clase
+        //* Assert
         expect(elem.innerHTML).toContain('Progreso de carga');
     });
 
