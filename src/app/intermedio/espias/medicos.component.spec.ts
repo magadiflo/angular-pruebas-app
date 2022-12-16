@@ -37,11 +37,14 @@ describe('MedicosComponent', () => {
     });
 
     it('Debe agregar un nuevo médico al arreglo de médicos', () => {
+        //* Arrange (organizar/inicializar)
         const medicoBD = { id: 1, nombre: 'Martín' };
         spyOn(servicio, 'agregarMedico').and.returnValue(of(medicoBD));
 
+        //* Act (actuar)
         componente.agregarMedico();
 
+        //* Assert (confirmar/comprobar)
         expect(componente.medicos.indexOf(medicoBD)).toBeGreaterThanOrEqual(0);
     });
 
@@ -55,12 +58,19 @@ describe('MedicosComponent', () => {
     });
 
     it('Debe de llamar al servidor para borrar el médico', () => {
-        spyOn(window, 'confirm').and.returnValue(true); //* Cundo en el confirm hace click en aceptar
+        //* El objetivo de las pruebas automáticas es que nosotros no intactuemos con
+        //* las pruebas, es decir no hagamos click y esas cosas, sino por el contrario
+        //* sea la misma prueba que ejecute todo en automático. Entonces, ¿cómo hacemos
+        //* para cuando no salga el confirm, dar click en aceptar?
+        //* Respuesta: podemos simular ese evento.
+        spyOn(window, 'confirm').and.returnValue(true);
+
+        //* No nos interesa que valor retorne, solo nos interesa que la función borrarMedico sea llamada
         const espia = spyOn(servicio, 'borrarMedico').and.returnValue(EMPTY);
 
         componente.borrarMedico('1');
 
-        expect(espia).toHaveBeenCalledOnceWith('1');
+        expect(espia).toHaveBeenCalledWith('1');
     });
 
     it('No Debe de llamar al servidor para borrar el médico', () => {
@@ -69,7 +79,7 @@ describe('MedicosComponent', () => {
 
         componente.borrarMedico('1');
 
-        expect(espia).not.toHaveBeenCalledOnceWith('1');
+        expect(espia).not.toHaveBeenCalledWith('1');
     });
 
 });
