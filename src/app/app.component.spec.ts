@@ -16,8 +16,11 @@ describe('AppComponent', () => {
       imports: [
         RouterTestingModule.withRoutes([])
       ],
+      //* NO_ERRORS_SCHEMA, Le decimos que ignore cualquier selector que no conozca: directiva, componente, etc.
+      //* Esto con la finalidad de no estar Importando los componentes dentro de imports[], ya que podrían haber muchos 
+      //* componentes, entonces para evitar importarlos mejor lo ignoramos
       schemas: [
-        NO_ERRORS_SCHEMA, //* Ignorará cualquier directiva, componente que no conozca
+        NO_ERRORS_SCHEMA,
       ]
     }).compileComponents();
   });
@@ -31,7 +34,7 @@ describe('AppComponent', () => {
   it('Debe tener un router-outlet', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const debugElement = fixture.debugElement.query(By.directive(RouterOutlet));
-    expect(debugElement).not.toBeNull();    
+    expect(debugElement).not.toBeNull();
   });
-  
+
 });
