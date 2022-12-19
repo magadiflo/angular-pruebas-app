@@ -1,11 +1,11 @@
-import { MedicosComponent } from '../../unitarias-intermedio/espias/medicos.component';
+import { MedicoComponent } from '../../integracion-intermedio-2/medico/medico.component';
 import { RUTAS } from './app.routes';
 
 describe('Rutas principales', () => {
 
     it('Debe existir la ruta /medico/:id', () => {
         expect(RUTAS).toContain(
-            { path: 'medico/:id', component: MedicosComponent }
+            { path: 'medico/:id', component: MedicoComponent }
         );
     });
 
