@@ -1,9 +1,22 @@
 import { MedicosComponent } from './medicos.component';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+//* import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { MedicosService, Medico } from './medicos.service';
-import { of } from 'rxjs';
+import { of, Observable } from 'rxjs';
+
+class FakeMedicosService {
+
+    getMedicos(): Observable<Medico[]> {
+        const medicos: Medico[] = [
+            { id: 1, name: 'Dr. Pedro', specialty: 'Pediatría' },
+            { id: 2, name: 'Dr. Carillo', specialty: 'General Medicine' },
+            { id: 3, name: 'Dr. Dávila', specialty: 'General Medicine' },
+        ];
+        return of(medicos);
+    }
+
+}
 
 describe('[Integración intermedio 2 - TestBed] MedicosComponent', () => {
 
@@ -41,18 +54,25 @@ describe('[Integración intermedio 2 - TestBed] MedicosComponent', () => {
      * * En Imports agregar el HttpClientTestingModule que es similar al HttpClient, pero que no llama a los servicios. Para simular esas llamadas
      * * a los servicios, es decir simular retorno de valores tal como lo haría la llamada real, usaremos los spyOn
      * *
+     * * SEGUNDA FORMA:
+     * * - En la primera forma usábamos en el imports: [HttpClientModule,], aquí no usaremos eso, el resto de la primera configuración sí.
+     * * - Lo que haremos será crear una clase similar al del servicio y en el providers decirle que usaremos nuestro FakeMedicosService
+     * *   en vez de la clase de servicio real MedicosService.
+     * * - En la clase FakeMedicosService, definimos el mismo método y tipo de retorno que necesitamos que nos devuelva ese servicio, es decir
+     * *   el método que necesitamos para hacer la prueba, en nuestro caso sería este:  getMedicos(): Observable<Medico[]> {...}
+     * * - Finalmente vemos que en ningún momento nos pide que importemos el HttpClient o el HttpClientTestingModule porque ya no lo necesitamos,
+     * *   puesto que ahora ya no usamos el MedicosService sino el FakeMedicosService
+     * *
      */
+
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({ //* Crea un módulo solo para estas pruebas
             declarations: [
                 MedicosComponent,
             ],
             providers: [
-                MedicosService,
+                { provide: MedicosService, useClass: FakeMedicosService },
             ],
-            imports: [
-                HttpClientTestingModule,
-            ]
         }).compileComponents(); //* Importante cuando estamos probando componentes colocar el .compileComponents(), cuando probamos servios no es necesario
     }));
 
@@ -77,18 +97,20 @@ describe('[Integración intermedio 2 - TestBed] MedicosComponent', () => {
 
     it('Retorna lista de médicos', () => {
         //* Arrange
-        const medicos: Medico[] = [
-            { id: 1, name: 'Dr. Pedro', specialty: 'Pediatría' },
-            { id: 2, name: 'Dr. Carillo', specialty: 'General Medicine' },
-            { id: 3, name: 'Dr. Dávila', specialty: 'General Medicine' },
-        ];
-        /**
-         * * El tipo de dato de retorno debe ser el tipo de dato de retorno del método real, es decir
-         * * el método a simular retorna un observable (getMedicos(): Observable<Medico[]>), por lo tanto
-         * * en el callFake(...) también debemos retornar un Observable<Medico[]>
-         */
-        spyOn(component._medicoService, 'getMedicos').and.callFake(() => of(medicos));
 
+        //* Como hasta este punto ya estamos usando una clase Fake (FakeMedicosService), 
+        //* podemos usar el .callThrough(); para decirle que se ejecute como normalmente se ejecuta, es decir,
+        //* como ahora en vez de usar la clase MedicosService estamos usando la clase FakeMedicosService, con 
+        //* .callThrough() ejecutaremos el método getMedicos(...) y este devolverá lo que esté definido en él.
+        //* 
+        //* NOTA: Si quisiéramos sobreescribir dicho método para hacer alguna prueba en específico, no habría problemas y
+        //* lo sobreescribimos haciendo como hacíamos normalmente: 
+        //*
+        //* - llamar al spyOn(...).and.callFake(() => ....)
+        //* - Otra forma sería llamar al returnValue: spyOn(...).and.returnValue(....)
+        //*  
+        //* La diferencia con returnValue es que se pasa defrente la respuesta y no usa un arrow function
+        spyOn(component._medicoService, 'getMedicos').and.callThrough();
 
         //* Act
         component.load();

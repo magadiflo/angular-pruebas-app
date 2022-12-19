@@ -37,3 +37,8 @@ Es una prueba
 ```
 it();
 ```
+
+--- 
+
+# Fuentes a consultar
+- Galaxy Training (youtube) [Pruebas unitarias con Angular 12](https://www.youtube.com/watch?v=tiIqfNVvsHc)
