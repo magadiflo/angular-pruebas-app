@@ -22,6 +22,7 @@ describe('[Integración intermedio 2 - TestBed] MedicosComponent', () => {
 
     let fixture: ComponentFixture<MedicosComponent>;
     let component: MedicosComponent;
+    let medicosService: MedicosService; //* El tipo de dato siempre debe ser la clase original y no la clase Fake
     /**
      * * Cuango generamos en automático el archivo de pruebas spec, angular crear con un async await, pero
      * * a partir de la versión 12 agregó una función waitForAsync(...) que es una función específicamente 
@@ -61,8 +62,17 @@ describe('[Integración intermedio 2 - TestBed] MedicosComponent', () => {
      * * - En la clase FakeMedicosService, definimos el mismo método y tipo de retorno que necesitamos que nos devuelva ese servicio, es decir
      * *   el método que necesitamos para hacer la prueba, en nuestro caso sería este:  getMedicos(): Observable<Medico[]> {...}
      * * - Finalmente vemos que en ningún momento nos pide que importemos el HttpClient o el HttpClientTestingModule porque ya no lo necesitamos,
-     * *   puesto que ahora ya no usamos el MedicosService sino el FakeMedicosService
+     * *   puesto que ahora ya no usamos el MedicosService sino el FakeMedicosService.
      * *
+     * * TERCERA FORMA:
+     * * - Normalmente los servicios inyectados en los componentes son del tipo private, así que lo definimos como private. Ahora, ¿Cómo dispondremos de ellos?
+     * * - Primero, veamos que tenemos definido nuestra clase Fake en vez de la clase real.
+     * * - Definimos una variable para nuestro servicio Real: let medicosService: MedicosService
+     * * - En el método beforeEach, usamos el método inject(...) de la clase TestBed para capturar la dependencia MedicosService 
+     * *   de nuestro módulo TestBed.configureTestingModule({...}). Hasta este punto, recordar que buscará nuestra clase MedicosService
+     * *   pero como en el providers le decimos que no use eso sino su reemplazo es que siempre usará la clase FakeMedicosService.
+     * * - Luego, en el spyOn(medicosService, 'getMedicos').and.callThrough(); le decimos que use nuestra variable medicosService
+     * *   en vez de component._medicoService
      */
 
     beforeEach(waitForAsync(() => {
@@ -93,6 +103,10 @@ describe('[Integración intermedio 2 - TestBed] MedicosComponent', () => {
          * * aunque en este tutorial se enfoca más que todo a probar el código en TypeScript
          */
         fixture.detectChanges();
+
+        //* Le decimos que tenga almacenado en esa variable nuestro servicio inyectable
+        //* El método inject(...), capturará esa dependencia MedicosService de nuestro módulo TestBed.configureTestingModule({...})
+        medicosService = TestBed.inject(MedicosService);
     });
 
     it('Retorna lista de médicos', () => {
@@ -110,7 +124,7 @@ describe('[Integración intermedio 2 - TestBed] MedicosComponent', () => {
         //* - Otra forma sería llamar al returnValue: spyOn(...).and.returnValue(....)
         //*  
         //* La diferencia con returnValue es que se pasa defrente la respuesta y no usa un arrow function
-        spyOn(component._medicoService, 'getMedicos').and.callThrough();
+        spyOn(medicosService, 'getMedicos').and.callThrough();
 
         //* Act
         component.load();
