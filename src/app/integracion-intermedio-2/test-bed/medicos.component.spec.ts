@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 //* import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { MedicosService, Medico } from './medicos.service';
-import { of, Observable } from 'rxjs';
+import { of, Observable, EMPTY } from 'rxjs';
 
 class FakeMedicosService {
 
@@ -14,6 +14,20 @@ class FakeMedicosService {
             { id: 3, name: 'Dr. Dávila', specialty: 'General Medicine' },
         ];
         return of(medicos);
+    }
+
+    agregarMedico(): Observable<Medico> {
+        const medico = { id: 1, name: 'Dr. Pedro', specialty: 'Pediatría' };
+        return of(medico);
+    }
+
+    actualizarMedico(): Observable<Medico> {
+        const medico = { id: 1, name: 'Dr. Pedro', specialty: 'Pediatría' };
+        return of(medico);
+    }
+
+    borrarMedico(): Observable<{}> {
+        return of({}); //*También se podría retornar un of(null);
     }
 
 }
@@ -132,6 +146,74 @@ describe('[Integración intermedio 2 - TestBed] MedicosComponent', () => {
         //* Assert
         expect(component.medicos.length).toBe(3);
     });
+
+    it('Debe agregar un médico', () => {
+        //* Arrange
+        const nuevoMedico = { id: 10, name: 'Dr. Pérez Albela', specialty: 'General Medicine' };
+        spyOn(medicosService, 'agregarMedico').and.returnValue(of(nuevoMedico));
+
+        //* Act
+        component.agregarMedico(nuevoMedico);
+
+        //* Assert
+        expect(component.medicos.length).toBe(1);
+    });
+
+    it('Debe actualizar un médico', () => {
+        //******************** Arrange
+
+        //*>>> Primero necesitamos crear un doctor
+        const nuevoMedico = { id: 10, name: 'Dr. Pérez Albela', specialty: 'General Medicine' };
+        spyOn(medicosService, 'agregarMedico').and.returnValue(of(nuevoMedico));
+        component.agregarMedico(nuevoMedico);
+
+        //*>>> Comprobamos: Como se ha creado un doctor, esperamos que haya uno en el arreglo
+        expect(component.medicos.length).toBe(1);
+
+        //*>>> Actualizamos algún campo
+        nuevoMedico.name = 'Doctorcito Matos';
+        spyOn(medicosService, 'actualizarMedico').and.returnValue(of(nuevoMedico));
+
+
+
+        //******************** Act
+        component.actualizarMedico(nuevoMedico);
+
+
+
+        //******************** Assert
+        //*>>> Debe seguir teniendo 1
+        expect(component.medicos.length).toBe(1);
+        expect(component.medicos).toContain(nuevoMedico);
+        expect(component.medicos[0].name).toContain(nuevoMedico.name);
+    });
+
+    it('Debe eliminar un médico', () => {
+        //******************** Arrange
+        //* Hay que espiar al confirm()
+        spyOn(window, 'confirm').and.returnValue(true);
+
+        //*>>> Primero necesitamos crear un doctor
+        const nuevoMedico = { id: 10, name: 'Dr. Pérez Albela', specialty: 'General Medicine' };
+        spyOn(medicosService, 'agregarMedico').and.returnValue(of(nuevoMedico));
+        component.agregarMedico(nuevoMedico);
+
+        //*>>> Comprobamos: Como se ha creado un doctor, esperamos que haya uno en el arreglo
+        expect(component.medicos.length).toBe(1);
+
+        //*>>> Cuando se llame al médico service su método borrarMedico que me retorne lo que me retorna el FakeService
+        spyOn(medicosService, 'borrarMedico').and.callThrough();
+
+
+        //******************** Act
+        component.borrarMedico(nuevoMedico.id);
+
+
+        //******************** Assert
+        expect(component.medicos.length).toBe(0);
+        expect(component.medicos).not.toContain(nuevoMedico);
+    });
+
 
 
 });

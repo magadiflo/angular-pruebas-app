@@ -23,6 +23,10 @@ export class MedicosService {
     return this.http.post<Medico>('...', medico);
   }
 
+  actualizarMedico(medico: Medico): Observable<Medico> {
+    return this.http.put<Medico>('...', medico);
+  }
+
   borrarMedico(id: number): Observable<void> {
     return this.http.delete<void>('...');
   }

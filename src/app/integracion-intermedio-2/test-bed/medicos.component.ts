@@ -28,12 +28,21 @@ export class MedicosComponent implements OnInit {
       .subscribe(medicos => this.medicos = medicos);
   }
 
-  agregarMedico() {
-    const medico: Medico = { name: 'Dr. Carlos Romero Salinas', specialty: 'General Medicine' };
-
+  agregarMedico(medico: Medico) {
     this._medicoService.agregarMedico(medico)
       .subscribe({
         next: medicoDB => this.medicos.push(medicoDB),
+        error: err => this.mensajeError = err,
+      });
+  }
+
+  actualizarMedico(medico: Medico) {
+    this._medicoService.actualizarMedico(medico)
+      .subscribe({
+        next: medicoDB => {
+          const index = this.medicos.findIndex(medico => medico.id === medicoDB.id);
+          this.medicos[index] = medicoDB;
+        },
         error: err => this.mensajeError = err,
       });
   }
@@ -43,7 +52,10 @@ export class MedicosComponent implements OnInit {
 
     if (confirmar) {
       this._medicoService.borrarMedico(id)
-        .subscribe(() => console.log('Médico eliminado con éxito'));
+        .subscribe(() => {
+          const index = this.medicos.findIndex(medico => medico.id === id);
+          this.medicos.splice(index, 1);
+        });
     }
 
   }
