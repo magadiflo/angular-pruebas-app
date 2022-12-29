@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { of, Observable } from 'rxjs';
+import { delay } from 'rxjs/operators';
 
 /*** 
  * * ALGO DE TEORÍA SOBRE QUÉ ES EL @Injectable()
@@ -62,5 +63,9 @@ export class ValueService {
 
   getPromiseValue(): Promise<string> {
     return Promise.resolve('promise value');
+  }
+
+  getObservableDelayValue(): Observable<string> {
+    return of('observable delay value').pipe(delay(10));
   }
 }

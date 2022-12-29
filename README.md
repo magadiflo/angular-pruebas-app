@@ -42,3 +42,6 @@ it();
 
 # Fuentes a consultar
 - Galaxy Training (youtube) [Pruebas unitarias con Angular 12](https://www.youtube.com/watch?v=tiIqfNVvsHc)
+
+# Documentación Oficial de Angular
+- [Testing Services](https://angular.io/guide/testing-services)
