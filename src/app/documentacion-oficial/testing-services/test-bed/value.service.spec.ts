@@ -5,6 +5,11 @@ import { ValueService } from '../sin-dependencias/value.service';
 class NotProvided extends ValueService {
 
 }
+/**
+ * * **********************************************
+ * * Probando un servicio que NO TIENE DEPENDENCIAS
+ * * **********************************************
+ */
 /***
  * * Angular TestBed
  * * ***************
