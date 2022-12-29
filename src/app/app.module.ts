@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { MedicosComponent } from './unitarias-intermedio/espias/medicos.component';
@@ -29,6 +30,7 @@ import { RouterMedicoComponent } from './integracion-avanzado/router-medico/rout
     BrowserModule,
     FormsModule,
     RouterModule.forRoot(RUTAS),
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
