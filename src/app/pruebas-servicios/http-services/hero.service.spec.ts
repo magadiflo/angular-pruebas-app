@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { defer } from 'rxjs';
 
-import { Hero } from '../interfaces/models.interface';
+import { Hero } from './hero.service';
 import { HeroService } from './hero.service';
 
 /**

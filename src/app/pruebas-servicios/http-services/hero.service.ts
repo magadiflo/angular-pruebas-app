@@ -2,7 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, tap, catchError, throwError, map } from 'rxjs';
 
-import { Hero } from '../interfaces/models.interface';
+export interface Hero {
+  id: number;
+  name: string;
+}
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),

@@ -65,9 +65,9 @@ describe('[Integración intermedio 2 - TestBed] MedicosComponent', () => {
      * * Entonces, ¿que haremos?, existe muchas formas de solucionar
      * *
      * * PRIMERA FORMA:
-     * * En providers agregar el MedicosService que es una dependencia de MedicosComponent y su vez el service tiene tiene la dependencia HttpClient
-     * * En Imports agregar el HttpClientTestingModule que es similar al HttpClient, pero que no llama a los servicios. Para simular esas llamadas
-     * * a los servicios, es decir simular retorno de valores tal como lo haría la llamada real, usaremos los spyOn
+     * * En providers agregar el MedicosService que es una dependencia de MedicosComponent y su vez el service tiene tiene la dependencia HttpClient.
+     * * En Imports agregar el HttpClientTestingModule que es similar al HttpClientModule (necesario para el HttpClient), pero que no llama a los servicios. 
+     * * Para simular esas llamadas a los servicios, es decir simular retorno de valores tal como lo haría la llamada real, usaremos los spyOn.
      * *
      * * SEGUNDA FORMA:
      * * - En la primera forma usábamos en el imports: [HttpClientModule,], aquí no usaremos eso, el resto de la primera configuración sí.
