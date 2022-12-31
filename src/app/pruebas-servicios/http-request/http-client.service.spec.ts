@@ -39,7 +39,7 @@ describe('HttpClient testing', () => {
   //* HttpTestingController, controlador para ser inyectado en las pruebas, que permite la
   //* simulación y el vaciado de solicitudes. La simulación de las solicitudes se realizan
   //* en lugar de realizar solicitudes de API reales.
-  let httpTestingController: HttpTestingController;
+  let httpTestingController: HttpTestingController;   
 
   beforeEach(() => {
     TestBed.configureTestingModule({

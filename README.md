@@ -45,3 +45,4 @@ it();
 
 # Documentación Oficial de Angular
 - [Testing Services](https://angular.io/guide/testing-services)
+- [Testing de heroes.service.ts](https://stackblitz.com/run?file=src%2Fapp%2Fheroes%2Fheroes.service.ts)
