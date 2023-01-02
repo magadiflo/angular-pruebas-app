@@ -108,6 +108,10 @@ describe('PU Componentes con dependencias - FORMA 1', () => {
          * * Por lo tanto, es similar a nuestro código de aplicación, donde primero configuramos 
          * * los proveedores y luego lo inyectamos en nuestros componentes para obtener una instancia 
          * * de ese servicio.
+         * * 
+         * * >>> Según análisis de Martín Díaz: En la variable medicoService, almacenamos la instancia del servicio 
+         * * que se inyecta al componente MedicosComponent.ts, para que podamos usar dentro de estas pruebas
+         * * dicha instancia.
          */
         medicoService = TestBed.inject(MedicosService);
     });
