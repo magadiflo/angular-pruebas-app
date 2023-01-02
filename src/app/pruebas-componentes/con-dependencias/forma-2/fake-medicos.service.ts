@@ -15,4 +15,18 @@ export class FakeMedicosService {
         ];
         return of(medicos);
     }
+
+    agregarMedico(): Observable<Medico> {
+        const medico = { id: 1, name: 'Dr. Pedro', specialty: 'Pediatría' };
+        return of(medico);
+    }
+
+    actualizarMedico(): Observable<Medico> {
+        const medico = { id: 1, name: 'Dr. Pedro', specialty: 'Pediatría' };
+        return of(medico);
+    }
+
+    borrarMedico(): Observable<{}> {
+        return of({}); //*También se podría retornar un of(null);
+    }
 }

@@ -100,4 +100,79 @@ describe('PU Componentes con dependencias - FORMA 2', () => {
         expect(component.medicos.length).withContext('debe inicializar con médicos').toBe(4);
     });
 
+    it('debe agregar un médico', () => {
+        //* Arrange
+        const nuevoMedico = { id: 10, name: 'Dr. Pérez Albela', specialty: 'General Medicine' };
+        spyOn(medicoService, 'agregarMedico').and.returnValue(of(nuevoMedico));
+
+        //* Act
+        component.agregarMedico(nuevoMedico);
+
+        //* Assert
+
+        //* Recordar que como en el ngOnInit(), se llama al método load(), este llama al .getMedicos() y 
+        //* llena el arreglo de médicos con los valores que devuelve el subscribe(). En la clase FakeMedicosService
+        //* método getMedicos(), hay 4 médicos, más el de esta prueba sería 5 médicos. Esto sucede porque en el 
+        //* beforeEach(..) cada vez que se crea el componente MedicosComponent, se aplica el ciclo de vida del 
+        //* componente, es decir el ngOnInit()
+        expect(component.medicos.length).withContext('se debe agrgar un médico').toBe(5);
+    });
+
+    it('Debe actualizar un médico', () => {
+        //******************** Arrange
+
+        //*>>> Primero necesitamos crear un doctor
+        const nuevoMedico = { id: 10, name: 'Dr. Pérez Albela', specialty: 'General Medicine' };
+        spyOn(medicoService, 'agregarMedico').and.returnValue(of(nuevoMedico));
+        component.agregarMedico(nuevoMedico);
+
+        //*>>> Comprobamos: Como se ha creado un doctor, esperamos que haya un quinto elemento en el arreglo
+        expect(component.medicos.length).toBe(5);
+
+        //*>>> Actualizamos algún campo
+        nuevoMedico.name = 'Doctorcito Matos';
+        spyOn(medicoService, 'actualizarMedico').and.returnValue(of(nuevoMedico));
+
+
+
+        //******************** Act
+        component.actualizarMedico(nuevoMedico);
+
+
+
+        //******************** Assert
+        //*>>> Debe seguir teniendo 5
+        expect(component.medicos.length).toBe(5);
+        expect(component.medicos).toContain(nuevoMedico);
+        expect(component.medicos[4].name).toContain(nuevoMedico.name);
+    });
+
+    it('Debe eliminar un médico', () => {
+        //******************** Arrange
+        //* Hay que espiar al confirm()
+        spyOn(window, 'confirm').and.returnValue(true);
+
+        //*>>> Primero necesitamos crear un doctor
+        const nuevoMedico = { id: 10, name: 'Dr. Pérez Albela', specialty: 'General Medicine' };
+        spyOn(medicoService, 'agregarMedico').and.returnValue(of(nuevoMedico));
+        component.agregarMedico(nuevoMedico);
+
+        //*>>> Comprobamos: Como se ha creado un doctor, esperamos que haya un quinto elemento en el arreglo
+        expect(component.medicos.length).toBe(5);
+
+        //*>>> Cuando se llame al médico service su método borrarMedico que me retorne lo que me retorna el FakeService
+        spyOn(medicoService, 'borrarMedico').and.callThrough();
+
+
+        //******************** Act
+        component.borrarMedico(nuevoMedico.id);
+
+
+        //******************** Assert
+        //*>>> Comprobamos: Como se ha eliminado un doctor, esperamos que hayan 4 elementos en el arreglo (tamaño original)
+        expect(window.confirm).toHaveBeenCalled();
+        expect(component.medicos.length).toBe(4);
+        expect(component.medicos).not.toContain(nuevoMedico);
+    });
+
 });
