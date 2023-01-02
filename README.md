@@ -46,3 +46,4 @@ it();
 # Documentación Oficial de Angular
 - [Testing Services](https://angular.io/guide/testing-services)
 - [Testing de heroes.service.ts](https://stackblitz.com/run?file=src%2Fapp%2Fheroes%2Fheroes.service.ts)
+- [Creando pruebas unitarias para un Servicio en Angular | LoginService](https://medium.com/boolean-chile/creando-pruebas-unitarias-para-un-servicio-en-angular-807732534d78)
