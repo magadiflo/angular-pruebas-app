@@ -101,8 +101,10 @@ describe('[Integración intermedio 2 - TestBed] MedicosComponent', () => {
     }));
 
     beforeEach(() => {
+        //* TestBed.createComponent(...), es la que va a instanciar el componente que queremos probar, 
+        //* pero ese componente debe estar en el declarations
         fixture = TestBed.createComponent(MedicosComponent);
-        component = fixture.componentInstance;
+        component = fixture.componentInstance; //* Trae la instancia del componente que se ha creado
         /**
          * * Si nosotros tuviéramos un @Input, o algún dato que se va a inicializar dentro del componente,
          * * lo recomendable es que al último nosotros llamemos al fixture.detectChanges() para que pueda

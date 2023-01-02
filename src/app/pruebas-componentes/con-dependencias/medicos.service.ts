@@ -4,9 +4,7 @@ import { Observable } from 'rxjs';
 
 import { Medico } from './medico.model';
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable()
 export class MedicosService {
 
     //* No nos interesa si la url funciona o no, porque lo que haremos
