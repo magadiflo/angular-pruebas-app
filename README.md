@@ -2,9 +2,26 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.0.4.
 
-# Para iniciar las pruebas
+# Para iniciar todas las pruebas
 ```
 ng test
+```
+
+# Para iniciar una prueba en específico
+Supongamos que solo queremos testear el archivo de pruebas **login.service.spec.ts** y en el proyecto
+tenemos muchos archivos de pruebas.  
+Para lograr eso usamos la bandera **--include** y lo igualamos a 
+la ruta empezando por **src\app.....**  hasta donde se encuentre el archivo a testear.
+```
+ng test --include=src\app\pruebas-servicios\http-services\login-service\login.service.spec.ts
+```
+
+# Para iniciar un grupo de pruebas en específico
+Supongamos que en el proyecto tenemos muchos archivos de pruebas ubicadas en distintos directorios, pero nosotros <br>
+solo queremos ejecutar el conjunto de pruebas ubicadas en un directorio específico y no todas las pruebas del proyecto.  
+Para eso haremos como en el caso anterior, pero esta vez la ruta será hasta el directorio raíz que contenga el conjunto de pruebas.
+```
+ng test --include=src\app\unitarias-basicos\
 ```
 
 # Para ver estadísticas de las pruebas
