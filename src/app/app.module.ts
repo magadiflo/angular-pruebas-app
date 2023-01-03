@@ -14,6 +14,7 @@ import { IncrementadorComponent } from './integracion-intermedio-2/incrementador
 import { RUTAS } from './integracion-avanzado/rutas/app.routes';
 import { NavbarComponent } from './integracion-avanzado/navbar/navbar.component';
 import { RouterMedicoComponent } from './integracion-avanzado/router-medico/router-medico.component';
+import { TitleCasePipe } from './pruebas-pipes/title-case.pipe';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { RouterMedicoComponent } from './integracion-avanzado/router-medico/rout
     IncrementadorComponent,
     NavbarComponent,
     RouterMedicoComponent,
+    TitleCasePipe,
   ],
   imports: [
     BrowserModule,
