@@ -39,21 +39,19 @@ describe('PU Componentes con dependencias - FORMA 3', () => {
     }));
 
     beforeEach(() => {
-        //* Importante colocar aquí el espía, ya que el ngOnInit() del MedicoComponent se ejecuta luego de creado
-        //* el componente MedicoComponent según el ciclo de vida del componente. Además, en el OnInit().. 
-        //* estamos llamando al método load() y este a su vez al servicio MedicosService (this._medicoService.getMedicos()),
-        //* el que debería respondernos un observable. Si colocamos este espía, nos arrojaría un error:
-        //*
-        //* **** TypeError: Cannot read properties of undefined (reading 'subscribe') ****
-        medicosServiceSpy.getMedicos.and.returnValue(of([]));
-
-        
         fixture = TestBed.createComponent(MedicosComponent);
         component = fixture.componentInstance;
-        fixture.detectChanges();
+
+        //* fixture.detectChanges(), es el que ejecuta el ciclo de detección de cambios, si lo dejamos aquí no arrojará un error:
+        //* **** TypeError: Cannot read properties of undefined (reading 'subscribe') ****
+        //* y eso es porque según vi, al colocar ese detectChanges(), se ejecuta el ngOnInit() y este llama al load() y como hasta
+        //* este momento aún no definimos ningún espía es que nos sale ese error. Por eso preferí colocar el fixture.detectChanges();
+        //* dentro de la misma prueba, luego de haber definido el valor de retorno del espía
+        //*
+        //* >>>>>> fixture.detectChanges();
     });
 
-    it('el metodo load debe inicializar el atributo medicos', () => {
+    it('debería inicializar el atributo médicos', () => {
         /**
          * * Como la variable medicoServiceSpy, ya es un espía en sí, ya no es necesario
          * * usar el método spyOn(medicoService....), sino usar directamente el espía creado,
@@ -65,7 +63,11 @@ describe('PU Componentes con dependencias - FORMA 3', () => {
             { id: 3, name: 'Dr. Dávila', specialty: 'General Medicine' },
         ];
         medicosServiceSpy.getMedicos.and.returnValue(of(medicos));
-        component.load();
+
+        //* Activando el ciclo de detección de cambios. Con esto ya se ejecuta el ngOnInit, y dentro de él
+        //* se llama al método load() y este trae la lista de médicos para agregarlos al arreglo
+        fixture.detectChanges();
+
         expect(component.medicos.length).withContext('debe inicializar con médicos').toBe(3);
     });
 

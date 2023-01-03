@@ -8,7 +8,11 @@ import { Medico } from './medico.model';
 export class MedicosService {
 
     //* No nos interesa si la url funciona o no, porque lo que haremos
-    //* será probar este clase de servicio y hacer simulaciones de respuesta
+    //* será probar la clase de MedicosComponent y no este servicio, 
+    //* pero este servicio es usado (inyectado) en MedicosComponent,
+    //* entonces, de alguna manera necesitamos usarlo pero no para hacer
+    //* llamadas reales al endpoint, sino más bien para hacer simulaciones
+    //* de sus respuestas.
     readonly END_POINT = '...';
 
     constructor(private _http: HttpClient) { }
